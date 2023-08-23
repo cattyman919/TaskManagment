@@ -16,8 +16,8 @@ export class UsersService {
     return await this.usersRepository.save(createUserDto);
   }
 
-  async findByUsername(username: string) {
-    return await this.usersRepository.findOneBy({ username });
+  async findByEmail(email: string) {
+    return await this.usersRepository.findOneBy({ email });
   }
 
   async remove(id: number) {
