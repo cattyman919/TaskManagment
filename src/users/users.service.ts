@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { DataNotFoundFilter } from 'src/filters/DataNotFound.filter';
+import { DataNotFoundFilter } from 'filters/DataNotFound.filter';
 @Injectable()
 @UseFilters(DataNotFoundFilter)
 export class UsersService {
