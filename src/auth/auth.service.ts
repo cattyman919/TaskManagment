@@ -16,14 +16,14 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(registerData: registerDto) {
+  async register(registerData: registerDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(registerData.password, 10);
     return await this.userService.createUser({
       ...registerData,
       password: hashedPassword,
     });
   }
-  async ValidateUser(loginData: LoginDTO) {
+  async ValidateUser(loginData: LoginDTO): Promise<User> {
     const user = await this.userService.findByEmail(loginData.email);
     if (!user)
       throw new HttpException('Invalid Credentials', HttpStatus.UNAUTHORIZED);
@@ -42,8 +42,7 @@ export class AuthService {
   }
 
   // After Login Success, Generate JWT Token
-  login(request: Request) {
-    const { user } = request;
+  login(request: Request, user: User): User {
     const payload = { userId: user.id };
     const token = this.jwtService.sign(payload);
     const AuthCookie = `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
