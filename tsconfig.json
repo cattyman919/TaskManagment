@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "Node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -11,7 +12,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@Auth/Guards": ["auth/guards"]
+      "@AuthGuards/*": ["auth/guards/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

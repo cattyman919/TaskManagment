@@ -11,11 +11,12 @@ export class UsersService {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  async getAllUsers() {
-    return await this.usersRepository.find();
-  }
   async createUser(createUserDto: CreateUserDto) {
     return await this.usersRepository.save(createUserDto);
+  }
+
+  async findById(id: number) {
+    return await this.usersRepository.findOneBy({ id });
   }
 
   async findByEmail(email: string) {
