@@ -9,7 +9,13 @@ import { DataNotFoundFilter } from './filters/DataNotFound.filter';
 import { TasksModule } from './tasks/tasks.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule, UsersModule, AuthModule, TasksModule],
+  imports: [
+    ConfigModule.forRoot(),
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
+    TasksModule,
+  ],
   controllers: [AppController],
   providers: [
     {

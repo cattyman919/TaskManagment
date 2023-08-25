@@ -17,6 +17,6 @@ export class User {
   @Exclude()
   public password: string;
 
-  @OneToMany(() => Task, (task) => task.user, { eager: true })
+  @OneToMany(() => Task, (task) => task.user)
   public tasks: Task[];
 }

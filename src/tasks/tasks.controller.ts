@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -20,31 +21,38 @@ import RequestWithUser from 'auth/interface/RequestWithUser.interface';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
+  @Get('admin')
+  findAllForAdmin() {
+    return this.tasksService.findAllForAdmin();
+  }
+
+  @Get()
+  findAllForUser(@Req() request: RequestWithUser) {
+    return this.tasksService.findAllForUser(request.user);
+  }
+
   @Post()
   create(
     @Body() createTaskDto: CreateTaskDto,
     @Req() request: RequestWithUser,
   ) {
-    return this.tasksService.create(createTaskDto, request.user);
-  }
-
-  @Get()
-  findAll() {
-    return this.tasksService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id);
+    return this.tasksService.CreateTask(createTaskDto, request.user);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(+id, updateTaskDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() request: RequestWithUser,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
+    return this.tasksService.UpdateTask(id, updateTaskDto, request.user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() request: RequestWithUser,
+  ) {
+    return this.tasksService.RemoveTask(+id, request.user);
   }
 }
