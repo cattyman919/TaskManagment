@@ -49,15 +49,10 @@ export class AuthService {
       'JWT_EXPIRATION_TIME',
     )}`;
     request.res.setHeader('Set-Cookie', AuthCookie);
-    // request.res.cookie('Authentication', AuthHeader, {
-    //   httpOnly: true,
-    //   path: '/',
-    //   maxAge: this.configService.get('JWT_EXPIRATION_TIME'),
-    // });
     return user;
   }
 
-  async logout() {
-    return;
+  logoutCookie() {
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 }
