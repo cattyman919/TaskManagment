@@ -1,3 +1,4 @@
+import { PriorityLevel, TaskStatus } from 'tasks/enums/task.enums';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from 'users/entities/user.entity';
 
@@ -9,27 +10,15 @@ export class Task {
   @Column()
   public title: string;
 
-  @Column('text')
+  @Column({ type: 'text' })
   public description: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: PriorityLevel })
   public priority: PriorityLevel;
 
-  @Column()
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TO_DO })
   public status: TaskStatus;
 
   @ManyToOne(() => User, (user) => user.tasks)
   public user: User;
-}
-
-export enum TaskStatus {
-  TO_DO = 'TO_DO',
-  IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED',
-}
-
-export enum PriorityLevel {
-  LOW = 'LOW',
-  MEDIUM = 'MEDIUM',
-  HIGH = 'HIGH',
 }
